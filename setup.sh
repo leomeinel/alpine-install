@@ -173,7 +173,7 @@ cp -a "${BOOT1_MOUNTPOINT}" /tmp/boot
 cp -a /.modloop /tmp/.modloop
 mountpoint -q /.modloop &&
     umount -AR /.modloop
-mv /tmp/.modloop/{,.}* /.modloop
+mv /tmp/.modloop/{,.}* /.modloop || true
 ## Unmount disks that might be mounted by install
 findmnt -S "${BOOT1}" >/dev/null 2>&1 &&
     umount "${BOOT1}"
@@ -358,7 +358,7 @@ OPTIONS4="noexec,nodev,nosuid,noatime,fmask=0077,dmask=0077"
 mount -m -o "${OPTIONS4}" -t vfat "${BOOT1P1}" /mnt/boot
 
 # Execute setup-disk
-mv /tmp/boot/{,.}* /mnt/boot/
+mv /tmp/boot/{,.}* /mnt/boot/ || true
 setup-disk -L -m sys /mnt
 
 # Append /mnt/boot/usercfg.txt
