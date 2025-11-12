@@ -167,14 +167,9 @@ setup-devd mdev
 vgchange -an || true
 ## Stop all mdadm RAIDs
 mdadm -Ss || true
-## Copy files from "${BOOT1}"
-BOOT1_MOUNTPOINT="$(findmnt -n -S "${BOOT1}" -o TARGET | head -n 1 | tr -d "[:space:]")"
-cp -a "${BOOT1_MOUNTPOINT}" /tmp/boot
-cp -a /.modloop /tmp/.modloop
+## Unmount disks that might be mounted by install
 mountpoint -q /.modloop &&
     umount -AR /.modloop
-mv /tmp/.modloop/{,.}* /.modloop || true
-## Unmount disks that might be mounted by install
 findmnt -S "${BOOT1}" >/dev/null 2>&1 &&
     umount "${BOOT1}"
 findmnt -S "${DISK1}" >/dev/null 2>&1 &&
@@ -358,7 +353,6 @@ OPTIONS4="noexec,nodev,nosuid,noatime,fmask=0077,dmask=0077"
 mount -m -o "${OPTIONS4}" -t vfat "${BOOT1P1}" /mnt/boot
 
 # Execute setup-disk
-mv /tmp/boot/{,.}* /mnt/boot/ || true
 setup-disk -L -m sys /mnt
 
 # Append /mnt/boot/usercfg.txt
@@ -368,6 +362,9 @@ setup-disk -L -m sys /mnt
     echo "dtparam=pciex1"
     echo "dtparam=pciex1_gen=3"
 } >/mnt/boot/usercfg.txt
+
+# Append /mnt/boot/cmdline.txt
+sed -i "1s/$/rootflags=${OPTIONS0}/" /mnt/boot/cmdline.txt
 
 # Notify user if script has finished successfully
 echo "'$(basename "${0}")' has finished successfully."
