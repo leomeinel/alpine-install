@@ -170,8 +170,8 @@ if [[ "${BOOT1}" == "${DISK1}" ]]; then
 fi
 
 # Configure udev
-apk del -q eudev
 setup-devd mdev
+apk del -qr eudev
 
 # Erase disks
 ## Deactivate all vgs
