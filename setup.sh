@@ -49,6 +49,7 @@ setup-user -a -k "${SYSUSER_PUBKEY}" -g proc "${SYSUSER}"
 passwd "${SYSUSER}"
 passwd root
 setup-sshd
+setup-ntp -c busybox
 
 # Unmount everything from /mnt
 mountpoint -q /mnt &&
