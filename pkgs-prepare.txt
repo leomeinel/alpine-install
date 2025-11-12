@@ -1,0 +1,14 @@
+bash
+btrfs-progs
+dosfstools
+eudev
+findmnt
+grep
+lsblk
+lvm2
+mdadm
+mount
+sed
+sgdisk
+umount
+wipefs
