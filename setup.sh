@@ -44,6 +44,7 @@ setup-hostname -n "${HOSTNAME}"."${DOMAIN}"
     echo "ff02::2  ip6-allrouters"
 } >/etc/hosts
 rc-service hostname restart
+sleep 10
 setup-timezone -z "${TIMEZONE}"
 setup-user -a -k "${SYSUSER_PUBKEY}" -g proc "${SYSUSER}"
 passwd "${SYSUSER}"
