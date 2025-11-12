@@ -26,7 +26,9 @@ SCRIPT_DIR="$(dirname -- "$(readlink -f -- "${0}")")"
 
 # Configure networking
 setup-interfaces -ar
+setup-ntp -c busybox
 rc-update add networking boot
+rc-service networking restart
 
 # Install packages that are dependencies for this script and configure repos
 setup-apkrepos
