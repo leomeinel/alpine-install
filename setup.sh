@@ -365,7 +365,7 @@ setup-disk -L -m sys /mnt
 } >/mnt/boot/usercfg.txt
 
 # Append /mnt/boot/cmdline.txt
-sed -i "1s/$/rootflags=${OPTIONS0}/" /mnt/boot/cmdline.txt
+sed -i "1s|$| rootflags=${OPTIONS0}|" /mnt/boot/cmdline.txt
 
 # Notify user if script has finished successfully
 echo "'$(basename "${0}")' has finished successfully."
