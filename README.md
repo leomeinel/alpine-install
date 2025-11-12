@@ -34,6 +34,6 @@ doas umount /mnt
 Execute the following scripts:
 
 ```sh
-/root/alpine-install/prepare.sh
-/root/alpine-install/setup.sh
+/root/alpine-install/prepare.sh 2>&1 | tee ./prepare.sh.log
+/root/alpine-install/setup.sh 2>&1 | tee ./setup.sh.log
 ```
