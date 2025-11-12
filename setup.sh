@@ -34,8 +34,17 @@ addgroup -S proc
 
 # Configure base system
 setup-keymap "${KEYLAYOUT}" "${KEYLAYOUT}"
-setup-timezone -z "${TIMEZONE}"
 setup-hostname -n "${HOSTNAME}"."${DOMAIN}"
+## Configure /etc/hosts
+{
+    echo "127.0.0.1  localhost localhost.localdomain"
+    echo "127.0.1.1  ${HOSTNAME}.${DOMAIN}	${HOSTNAME}"
+    echo "::1  ip6-localhost ip6-localhost.localdomain ip6-loopback ip6-loopback.localdomain"
+    echo "ff02::1  ip6-allnodes"
+    echo "ff02::2  ip6-allrouters"
+} >/etc/hosts
+rc-service hostname restart
+setup-timezone -z "${TIMEZONE}"
 setup-user -a -k "${SYSUSER_PUBKEY}" -g proc "${SYSUSER}"
 passwd "${SYSUSER}"
 passwd root

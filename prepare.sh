@@ -25,7 +25,8 @@ sed_exit() {
 SCRIPT_DIR="$(dirname -- "$(readlink -f -- "${0}")")"
 
 # Configure networking
-setup-interfaces
+setup-interfaces -ar
+rc-update add networking boot
 setup-ntp -c busybox
 
 # Install packages that are dependencies for this script and configure repos
