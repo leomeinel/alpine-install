@@ -123,12 +123,12 @@ case "${choice}" in
     ## Prompt user for disk
     ## INFO: USB will be valid to allow external SSDs
     lsblk -drnpo SIZE,NAME,MODEL,LABEL -I 259,8,254,179
-    echo "You can't use the same drive /boot and /. This is required to enable booting on drives that require dtparam=pciex1_gen=3."
+    echo "INFO: You can't use the same drive for '/boot' and '/'."
     read -rp "Which disk do you want to use for /boot? (Type '/dev/sdX' fex.): " choice
     if lsblk -drnpo SIZE,NAME,MODEL,LABEL -I 259,8,254,179 "${choice}"; then
         ### Set DISK1
         BOOT1="${choice}"
-        echo "Erasing '${DISK1}'..."
+        echo "Erasing '${BOOT1}'..."
     else
         log_err "Drive not suitable for installation."
         exit 1
@@ -154,7 +154,7 @@ esac
 
 # Check that "${BOOT1}" != "${DISK1}"
 if [[ "${BOOT1}" == "${DISK1}" ]]; then
-    log_err "You can't use the same drive /boot and /. This is required to enable booting on drives that require dtparam=pciex1_gen=3."
+    log_err "You can't use the same drive for '/boot' and '/'."
     exit 1
 fi
 
