@@ -37,6 +37,7 @@ setup-keymap "${KEYLAYOUT}" "${KEYLAYOUT}"
 setup-timezone -z "${TIMEZONE}"
 setup-hostname -n "${HOSTNAME}"."${DOMAIN}"
 setup-user -a -k "${SYSUSER_PUBKEY}" -g proc "${SYSUSER}"
+passwd "${SYSUSER}"
 passwd root
 setup-sshd
 
