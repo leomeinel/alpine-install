@@ -384,8 +384,7 @@ sed -i "\|${STRING}|d" "${FILE}"
 STRING="subvolid=[^[:space:],]*,\?"
 grep -q "${STRING}" "${FILE}" || sed_exit
 sed -i "s/${STRING}//g" "${FILE}"
-STRING=",[[:space:]]0[[:space:]]0$"
-grep -q "${STRING}" "${FILE}" || sed_exit
+STRING=",[[:space:]][0-9][[:space:]][0-9]$"
 sed -i "s/${STRING}/\t0 0/g" "${FILE}"
 ## END sed
 
