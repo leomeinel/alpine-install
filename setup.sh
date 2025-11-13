@@ -375,7 +375,7 @@ setup-disk -L -m sys /mnt
 # Append /mnt/boot/cmdline.txt
 sed -i "1s|$| rootflags=${OPTIONS0}|" /mnt/boot/cmdline.txt
 
-# Remove duplicate mount for /tmp in /mnt/etc/fstab
+# Modify /mnt/etc/fstab
 ## START sed
 FILE=/mnt/etc/fstab
 STRING=$'^tmpfs\t/tmp\ttmpfs\tnosuid,nodev\t0\t0$'
