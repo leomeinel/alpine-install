@@ -1,5 +1,7 @@
 # Setup
 
+:warning: This currently results in various problems after installation. It might be possible that this will be resolved after the [alpine 3.23 release](https://wiki.alpinelinux.org/wiki/Draft_Release_Notes_for_Alpine_3.23.0). Especially the `/usr-merge` might be necessary. See [this](https://gist.github.com/leomeinel/e9af276afba84e6b64e635b578314d94) for details.
+
 This is meant for a system that uses an nvme ssd that requires `dtparam=pciex1_gen=3` to even be detected.
 
 ## Configure eeprom
