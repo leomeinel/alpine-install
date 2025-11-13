@@ -40,8 +40,16 @@ sed -i "\|${STRING}|d" "${FILE}"
 STRING="^#\?http://"
 grep -q "${STRING}" "${FILE}" || sed_exit
 sed -i "s|${STRING}|https://|g" "${FILE}"
+# START FIXME: Temporary workaround suggested in IRC
+STRING="/v3.22/"
+grep -q "${STRING}" "${FILE}" || sed_exit
+sed -i "s|${STRING}|/edge/|g" "${FILE}"
 ## END sed
 apk update
+apk upgrade -aU
+apk add merge-usr
+merge-usr
+# END FIXME: Temporary workaround suggested in IRC
 xargs -r apk add -q <"${SCRIPT_DIR}/pkgs-prepare.txt"
 
 # Notify user if script has finished successfully
