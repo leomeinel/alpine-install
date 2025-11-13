@@ -383,6 +383,12 @@ FILE=/mnt/etc/fstab
 STRING=$'^tmpfs\t/tmp\ttmpfs\tnosuid,nodev\t0\t0$'
 grep -q "${STRING}" "${FILE}" || sed_exit
 sed -i "\|${STRING}|d" "${FILE}"
+STRING="subvolid=[^[:space:],]*,\?"
+grep -q "${STRING}" "${FILE}" || sed_exit
+sed -i "s/${STRING}//g" "${FILE}"
+STRING=",[[:space:]]0[[:space:]]0$"
+grep -q "${STRING}" "${FILE}" || sed_exit
+sed -i "s/${STRING}/\t0 0/g" "${FILE}"
 ## END sed
 
 # Notify user if script has finished successfully
