@@ -33,6 +33,7 @@ SCRIPT_DIR="$(dirname -- "$(readlink -f -- "${0}")")"
 addgroup -S proc
 
 # Configure base system
+setup-devd mdev
 setup-keymap "${KEYLAYOUT}" "${KEYLAYOUT}"
 setup-hostname -n "${HOSTNAME}"."${DOMAIN}"
 ## Configure /etc/hosts
@@ -64,14 +65,15 @@ case "${choice}" in
 "YES")
     ## Detect disks
     readarray -t DISKS < <(lsblk -drnpo NAME -I 259,8,254 | tr -d "[:blank:]")
-    DISKS_LENGTH="${#DISKS[@]}"
-    for ((i = 0; i < DISKS_LENGTH; i++)); do
-        if udevadm info -q property --property=ID_BUS --value "${DISKS[${i}]}" | grep -q "usb"; then
-            unset 'DISKS[${i}]'
-            continue
-        fi
-        DISKS=("${DISKS[@]}")
-    done
+    # FIXME: This is only supported by eudev
+    # DISKS_LENGTH="${#DISKS[@]}"
+    # for ((i = 0; i < DISKS_LENGTH; i++)); do
+    #     if udevadm info -q property --property=ID_BUS --value "${DISKS[${i}]}" | grep -q "usb"; then
+    #         unset 'DISKS[${i}]'
+    #         continue
+    #     fi
+    #     DISKS=("${DISKS[@]}")
+    # done
     if [[ "${#DISKS[@]}" -lt 2 ]]; then
         log_err "There are less than 2 disks attached."
         exit 1
@@ -168,10 +170,6 @@ if [[ "${BOOT1}" == "${DISK1}" ]]; then
     log_err "You can't use the same drive for '/boot' and '/'."
     exit 1
 fi
-
-# Configure udev
-setup-devd mdev
-apk del -qr eudev
 
 # Erase disks
 ## Deactivate all vgs

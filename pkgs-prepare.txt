@@ -1,7 +1,6 @@
 bash
 btrfs-progs
 dosfstools
-eudev
 findmnt
 grep
 lsblk
