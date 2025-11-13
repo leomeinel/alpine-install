@@ -388,5 +388,10 @@ STRING=",[[:space:]][0-9][[:space:]][0-9]$"
 sed -i "s/${STRING}/\t0 0/g" "${FILE}"
 ## END sed
 
+# START FIXME: Temporary workaround suggested in IRC
+chroot /mnt apk add merge-usr
+chroot /mnt merge-usr
+# END FIXME: Temporary workaround suggested in IRC
+
 # Notify user if script has finished successfully
 echo "'$(basename "${0}")' has finished successfully."
