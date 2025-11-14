@@ -33,7 +33,7 @@ doas umount /mnt
 
 ## Installation
 
-Execute the following scripts:
+Boot install medium and execute the following scripts:
 
 ```sh
 /root/alpine-install/prepare.sh 2>&1 | tee ./prepare.sh.log
