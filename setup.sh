@@ -28,7 +28,7 @@ SCRIPT_DIR="$(dirname -- "$(readlink -f -- "${0}")")"
 # shellcheck source=/dev/null
 . "${SCRIPT_DIR}"/install.conf
 
-# Groups
+# Add required groups
 addgroup -S proc
 
 # Configure base system
@@ -231,11 +231,10 @@ if [[ -n "${DISK2}" ]]; then
 else
     sgdisk -n 0:0:0 -t 1:8300 "${DISK1}"
 fi
-
-# Scan /sys and populate
+## Scan /sys and populate
 mdev -fs
 
-# Configure raid and encryption
+# Configure raid
 BOOT1P1="$(lsblk -rnpo TYPE,NAME "${BOOT1}" | grep "part" | sed 's/part//g' | sed -n '1p' | tr -d "[:space:]")"
 DISK1P1="$(lsblk -rnpo TYPE,NAME "${DISK1}" | grep "part" | sed 's/part//g' | sed -n '1p' | tr -d "[:space:]")"
 if [[ -n "${DISK2}" ]]; then
@@ -363,7 +362,7 @@ mount -m -o "${OPTIONS4}" -t vfat "${BOOT1P1}" /mnt/boot
 # Execute setup-disk
 setup-disk -L -m sys /mnt
 
-# Append /mnt/boot/usercfg.txt
+# Create /mnt/boot/usercfg.txt
 {
     echo "# alpine-install"
     echo "## nvme"
