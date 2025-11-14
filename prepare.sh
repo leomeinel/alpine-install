@@ -39,6 +39,7 @@ sed -i "\|${STRING}|d" "${FILE}"
 STRING="^#\?http://"
 grep -q "${STRING}" "${FILE}" || sed_exit
 sed -i "s|${STRING}|https://|g" "${FILE}"
+apk update
 xargs -r apk add -q <"${SCRIPT_DIR}/pkgs-prepare.txt"
 
 # Notify user if script has finished successfully
