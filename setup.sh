@@ -64,15 +64,6 @@ case "${choice}" in
 "YES")
     ## Detect disks
     readarray -t DISKS < <(lsblk -drnpo NAME -I 259,8,254 | tr -d "[:blank:]")
-    # FIXME: This is only supported by eudev
-    # DISKS_LENGTH="${#DISKS[@]}"
-    # for ((i = 0; i < DISKS_LENGTH; i++)); do
-    #     if udevadm info -q property --property=ID_BUS --value "${DISKS[${i}]}" | grep -q "usb"; then
-    #         unset 'DISKS[${i}]'
-    #         continue
-    #     fi
-    #     DISKS=("${DISKS[@]}")
-    # done
     if [[ "${#DISKS[@]}" -lt 2 ]]; then
         log_err "There are less than 2 disks attached."
         exit 1
